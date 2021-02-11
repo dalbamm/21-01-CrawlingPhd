@@ -34,9 +34,14 @@ def __main__():
     return
 
 def get_phd_html():
-    
-    driver=webdriver.Chrome(path)
-
+    #set headless option
+    options=webdriver.ChromeOptions()
+    #options.add_experimental_option("excludeSwitches",["ignore-certificate-errors"])
+    options.headless=True
+     
+    #set driver
+    driver=webdriver.Chrome(path, options=options)
+   
     #Access into webpage
     driver.get('https://console.aws.amazon.com')
     driver.implicitly_wait(3)
@@ -60,6 +65,8 @@ def get_phd_html():
     #move into event log page
     driver.get("https://phd.aws.amazon.com/phd/home?region=ap-northeast-2#/event-log")
     source=driver.page_source
+
+    driver.quit()
     return source;
 
 

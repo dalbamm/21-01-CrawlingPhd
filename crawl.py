@@ -6,7 +6,6 @@ from selenium import webdriver
 
 
 path=sys.argv[1]
-#"/Users/primstryn/EnvFiles/"
 pwdVal=sys.argv[2]
 mode=sys.argv[3]
 
@@ -18,14 +17,24 @@ def __main__():
     else:
         pathSrc=sys.argv[4]
         with open(pathSrc,'r') as f:
-            for line in f.readlines():
-                print(line)
-                bs.children(line)
+            raw=f.read()
+            doc=bs(raw)
+            tr_list=doc.find_all("tr")
+            
+            for tr in tr_list:
+                td_list=tr.find_all("td")
+                a_list=tr.find_all("a")
+                active_list=doc.find_all("span","-")
+                if active_list.__len__ !=0:
+                    print(active_list)
+            #for line in f.readlines():
+            #    print(line)
+                
         f.close()
     return
 
-#"adelaide13^^"
 def get_phd_html():
+    
     driver=webdriver.Chrome(path)
 
     #Access into webpage
@@ -48,7 +57,6 @@ def get_phd_html():
 
     time.sleep(10)
 
-    label .test_parsing
     #move into event log page
     driver.get("https://phd.aws.amazon.com/phd/home?region=ap-northeast-2#/event-log")
     source=driver.page_source
@@ -60,8 +68,8 @@ def parseHtml(source):
     fs=open('phd.html','a')
 
     for tag in soup.find_all("tr", class_="awsui-table-row"):
-        fs.write(tag.__str__()+"\n")
-
+        print(tag)
+        fs.write(tag.__str__())
     fs.close()
     return
 
